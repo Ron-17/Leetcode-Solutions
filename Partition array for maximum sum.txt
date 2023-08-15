@@ -1,0 +1,35 @@
+class Solution {
+public:
+     int max(int a,int b)
+     {
+         return a>b?a:b;
+     }
+     int min(int a,int b)
+     {
+         return b>a?a:b;
+     }
+     int solve(vector<int>& arr, int k,int index,vector<int>&dp)
+     {
+         if(index==arr.size())
+           return 0;
+        if(dp[index]!=-1)
+            return dp[index];
+        int maxi=INT_MIN;
+        int len=0;
+        int Maxans=INT_MIN;
+        int sum=0;
+        for(int j=index;j<min(arr.size(),index+k);j++)
+        {
+            len++;
+            maxi=max(maxi,arr[j]);
+            sum=maxi*len+solve(arr,k,j+1,dp);
+            Maxans=max(Maxans,sum);
+        }
+        return dp[index]=Maxans;
+
+     }
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+        vector<int>dp(arr.size(),-1);
+        return solve(arr,k,0,dp);
+    }
+};

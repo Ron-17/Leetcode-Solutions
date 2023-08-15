@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int solve(string &s,string &str,int i,int j,vector<vector<int>>&dp)
+    {
+        if(i==s.length()||j==str.length())
+          return 0;
+        if(dp[i][j]!=-1)
+          return dp[i][j];
+        int ans=0;
+        if(s[i]==str[j])
+         ans=1+solve(s,str,i+1,j+1,dp);
+        else
+         ans=max(solve(s,str,i+1,j,dp),solve(s,str,i,j+1,dp));
+        return dp[i][j]=ans;
+    }
+    int longestPalindromeSubseq(string s) {
+        string str=s;
+        int n=s.length();
+        reverse(str.begin(),str.end());
+        int i=0;
+        int j=0;
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+        return solve(s,str,i,j,dp);
+    }
+};
